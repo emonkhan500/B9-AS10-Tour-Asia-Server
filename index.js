@@ -39,12 +39,21 @@ app.get('/spot',async(req,res)=>{
   })
 
 // countries api
-app.get('/countries/:country',async(req,res)=>{
-  const name= req.params.country
-  const query={country:(name)}
-  const result=await countryCollection.findOne(query)
+app.get('/countries',async(req,res)=>{
+  
+  const result= await countryCollection.find().toArray()
   res.send(result)
 })
+
+// 
+app.get('/countries/:country', async (req, res) => {
+  const country= req.params.country;
+  const query = { country: (country) }
+  const sortedCountry = await countryCollection.find(query).toArray();
+  res.send(sortedCountry);
+})
+
+
 
 
   // update
