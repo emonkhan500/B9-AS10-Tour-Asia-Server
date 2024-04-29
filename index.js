@@ -28,6 +28,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
     const spotCollection = client.db("spotDB").collection('spot')
+    const countryCollection = client.db("spotDB").collection('countries')
 
 // get
 
@@ -52,7 +53,7 @@ app.get('/spot',async(req,res)=>{
 app.get('/mylist/:email',async(req,res)=>{
     // console.log(req.params.email)
     const result=await spotCollection.find({email : req.params.email}).toArray()
-    res.send(result)
+    res.send(result)           
 })   
 
 // post 
