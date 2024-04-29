@@ -38,6 +38,16 @@ app.get('/spot',async(req,res)=>{
   })
 
 
+  // update
+  
+  app.get('/spot/:id',async(req,res)=>{
+    const id= req.params.id
+    const query={_id:new ObjectId(id)}
+    const result=await spotCollection.findOne(query)
+    res.send(result)
+  })
+
+
 //mylist
 app.get('/mylist/:email',async(req,res)=>{
     // console.log(req.params.email)
@@ -51,6 +61,25 @@ app.post('/spot',async(req,res)=>{
     console.log(newSpot)
     const result = await spotCollection.insertOne(newSpot);
       res.send(result)
+})
+// update
+app.put('/spot/:id',async(req,res)=>{
+  const id=req.params.id
+  const filter={_id:new ObjectId(id)}
+  const options={upsert:true}
+  const updatedSpot=req.body
+  const spot={
+    $set:{
+      image:updatedSpot.image,
+       spot:updatedSpot.spot,
+       country:updatedSpot.country,location:updatedSpot.location, description:updatedSpot.description,cost:updatedSpot.cost,
+        season:updatedSpot.season,
+         travel:updatedSpot.travel, 
+         visitor:updatedSpot.visitor
+    }
+  }
+const result=await spotCollection.updateOne(filter,spot,options)
+res.send(result)
 })
 
 // delete
