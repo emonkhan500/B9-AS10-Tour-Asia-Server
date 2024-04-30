@@ -49,7 +49,7 @@ app.get('/countries',async(req,res)=>{
 app.get('/countries/:country', async (req, res) => {
   const country= req.params.country;
   const query = { country: (country) }
-  const sortedCountry = await countryCollection.find(query).toArray();
+  const sortedCountry = await spotCollection.find(query).toArray();
   res.send(sortedCountry);
 })
 
@@ -68,7 +68,7 @@ app.get('/countries/:country', async (req, res) => {
 
 //mylist
 app.get('/mylist/:email',async(req,res)=>{
-    // console.log(req.params.email)
+ 
     const result=await spotCollection.find({email : req.params.email}).toArray()
     res.send(result)           
 })   
@@ -108,11 +108,11 @@ app.delete('/spot/:id',async(req,res)=>{
   const result=await spotCollection.deleteOne(query)
   res.send(result)
 })
-    // Send a ping to confirm a successful connection
+   
     // await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
-    // Ensures that the client will close when you finish/error
+    
     // await client.close();
   }
 }
